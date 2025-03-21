@@ -1,0 +1,57 @@
+name: DVMCP
+version: 0.1.0
+description: |
+  Damn Vulnerable Model Context Protocol (DVMCP) is an educational tool designed to demonstrate 
+  common security vulnerabilities in ML model serving systems. It is intended for security 
+  researchers and developers to learn about potential security issues in AI/ML deployments.
+
+warning: |
+  This is a deliberately vulnerable application intended for educational purposes only.
+  DO NOT deploy in production environments.
+
+tags:
+  - security
+  - education
+  - vulnerability-research
+  - model-serving
+
+endpoints:
+  - name: model-load
+    path: /api/v1/model/load
+    method: POST
+    description: "Demonstrates unsafe model deserialization (CWE-502)"
+    
+  - name: model-predict
+    path: /api/v1/model/predict
+    method: POST
+    description: "Demonstrates model input injection vulnerabilities (CWE-74)"
+    
+  - name: admin-token
+    path: /api/v1/admin/token
+    method: POST
+    description: "Demonstrates weak authentication (CWE-287)"
+    
+  - name: model-metadata
+    path: /api/v1/model/metadata
+    method: GET
+    description: "Demonstrates information disclosure (CWE-200)"
+
+deployment:
+  type: docker
+  requirements:
+    cpu: "1"
+    memory: "2Gi"
+    gpu: "0"
+  
+environment:
+  python_version: "3.8"
+  dependencies: requirements.txt
+
+documentation:
+  usage: README.md
+  license: MIT
+
+marketplace:
+  category: Security/Education
+  pricing: Free
+  support_email: researcher@example.com 

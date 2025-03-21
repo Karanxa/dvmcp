@@ -1,0 +1,112 @@
+# Smithery.ai configuration
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      port:
+        type: integer
+        default: 5000
+        description: "Port to run the server on"
+      openai_api_key:
+        type: string
+        description: "OpenAI API Key for model access"
+      debug:
+        type: boolean
+        default: false
+        description: "Enable debug mode"
+    required: ["openai_api_key"]
+  
+  commandFunction: |-
+    (config) => ({
+      command: "python",
+      args: [
+        "-m",
+        "flask",
+        "run",
+        "--host=0.0.0.0",
+        `--port=${config.port}`
+      ],
+      env: {
+        "FLASK_APP": "dvmcp.app:app",
+        "FLASK_ENV": config.debug ? "development" : "production",
+        "OPENAI_API_KEY": config.openai_api_key
+      }
+    })
+
+build:
+  dockerfile: Dockerfile
+  dockerBuildPath: .
+
+mcp:
+  version: "1.0"
+  endpoints:
+    - name: tools/list
+      method: POST
+      path: /mcp
+      requestSchema:
+        type: object
+        properties:
+          jsonrpc: { type: string, const: "2.0" }
+          method: { type: string, const: "tools_list" }
+          id: { type: string }
+    
+    - name: tools/call
+      method: POST
+      path: /mcp
+      requestSchema:
+        type: object
+        properties:
+          jsonrpc: { type: string, const: "2.0" }
+          method: { type: string, const: "tools_call" }
+          params: {
+            type: object,
+            properties: {
+              tool_name: { type: string }
+              parameters: { type: object }
+            }
+          }
+          id: { type: string }
+    
+    - name: resources/list
+      method: POST
+      path: /mcp
+      requestSchema:
+        type: object
+        properties:
+          jsonrpc: { type: string, const: "2.0" }
+          method: { type: string, const: "resources_list" }
+          id: { type: string }
+    
+    - name: resources/get
+      method: POST
+      path: /mcp
+      requestSchema:
+        type: object
+        properties:
+          jsonrpc: { type: string, const: "2.0" }
+          method: { type: string, const: "resources_get" }
+          params: {
+            type: object,
+            properties: {
+              resource_id: { type: string }
+            }
+          }
+          id: { type: string }
+    
+    - name: prompts/generate
+      method: POST
+      path: /mcp
+      requestSchema:
+        type: object
+        properties:
+          jsonrpc: { type: string, const: "2.0" }
+          method: { type: string, const: "prompts_generate" }
+          params: {
+            type: object,
+            properties: {
+              prompt: { type: string }
+              model: { type: string }
+            }
+          }
+          id: { type: string } 

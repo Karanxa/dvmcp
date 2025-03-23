@@ -1,3 +1,4 @@
+
 # Damn Vulnerable Model Context Protocol (DVMCP)
 
 A deliberately vulnerable implementation of a Model Context Protocol (MCP) server designed for security researchers and developers to learn about AI/ML model serving vulnerabilities.
@@ -313,10 +314,6 @@ The vulnerabilities in this application demonstrate critical security concerns i
    - Sanitize templates
    - Filter system information
    - Validate outputs
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on contributing to this project.
 
 ## License
 

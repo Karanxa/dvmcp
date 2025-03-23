@@ -35,6 +35,8 @@ export GOOGLE_API_KEY="your-key-here"
 python -m flask run
 ```
 
+5. Refer Client Integration File to understand how to interact with it
+
 ## MCP Vulnerabilities
 
 ### 1. Model Context Manipulation

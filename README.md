@@ -25,7 +25,7 @@ cd dvmcp
 pip install -r requirements.txt
 ```
 
-3. Set up your Google API key:
+3. Set up your Gemini API key:
 ```bash
 export GOOGLE_API_KEY="your-key-here"
 ```
